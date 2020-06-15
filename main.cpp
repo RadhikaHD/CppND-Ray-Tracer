@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include "math.h"
+#include "sphere.h"
 
 float hitSphere(Ray &r) {
 

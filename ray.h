@@ -30,7 +30,7 @@ class Ray
         return B;
     }
 
-    position pointAtParameter(float t)
+    position pointAtParameter(float t) const
     {
         return A + t*B;
     }
