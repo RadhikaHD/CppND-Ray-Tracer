@@ -10,8 +10,6 @@
 #include "math.h"
 #include "sphere.h"
 
-Sphere first_sphere{SPHERE_RADIUS, SPHERE_CENTRE};
-
 float hitSphere(Ray &r) {
 
   float a, b, c;
@@ -33,11 +31,31 @@ float hitSphere(Ray &r) {
     return -1.0;
 }
 
-rgb color(Ray &r) {
+bool hitObjects(std::vector<std::unique_ptr<Hittable>> const &hittable_objects, Ray const &r, float const tmin, float const tmax, std::shared_ptr<hit_record> rec)
+{
+
+ bool hit_anything = false;
+ std::shared_ptr<hit_record> temp_rec = std::make_shared<hit_record>();
+ float closest_so_far = tmax;
+
+ for (auto &hittable_object: hittable_objects)
+ {
+     if (hittable_object->hit(r, tmin, closest_so_far, temp_rec))
+     {
+        hit_anything = true;
+        closest_so_far = temp_rec->t;
+        rec = temp_rec;
+     }
+ }
+
+ return hit_anything;
+}
+
+rgb color(Ray &r, std::vector<std::unique_ptr<Hittable>> const &objects) {
 
     auto hit_rec = std::make_shared <hit_record>(); 
     //constructs a hit record with space allocated, returns a shared pointer to it 
-    auto hitornot = first_sphere.hit(r, TMIN, TMAX, hit_rec);
+    auto hitornot = hitObjects(objects, r, TMIN, TMAX, hit_rec);
     
   if (hitornot)
     return (0.5f*rgb(hit_rec->normal.x+1, hit_rec->normal.y+1, hit_rec->normal.z+1));
@@ -69,7 +87,7 @@ rgb256 rgbToRgb256(rgb const &rgbval) {
   return rgb256val;
 }
 
-void writeToPPM(std::string filename) {
+void writeToPPM(std::string filename, std::vector<std::unique_ptr<Hittable>> const &objects) {
   std::ofstream toppm;
   toppm.open(filename);
   toppm << "P3\n";
@@ -84,7 +102,7 @@ void writeToPPM(std::string filename) {
       position rdirection((SCREEN_BOTTOM_LEFT.x + x),
                           (SCREEN_BOTTOM_LEFT.y + y), SCREEN_Z_POS);
       Ray ray(CAMERA, rdirection);
-      rgb pixel_color = color(ray);
+      rgb pixel_color = color(ray,objects);
       rgb256 pixel_color_256 = rgbToRgb256(pixel_color);
       toppm << pixel_color_256.x << " " << pixel_color_256.y << " "
             << pixel_color_256.z << " ";
@@ -95,6 +113,11 @@ void writeToPPM(std::string filename) {
 }
 
 int main() {
-  writeToPPM("output.ppm");
+std::vector<std::unique_ptr<Hittable>> objects;
+objects.emplace_back(std::make_unique<Sphere>(SPHERE_RADIUS, SPHERE_CENTRE));
+objects.emplace_back(std::make_unique<Sphere>(100, position (0,-100.5,-1)));
+
+
+  writeToPPM("output.ppm", objects);
   return 0;
 }

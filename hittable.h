@@ -16,4 +16,5 @@ class Hittable
 {
     public:
     virtual bool hit(Ray const &r, float const tmin, float const tmax, std::shared_ptr<hit_record> rec)=0;
+    virtual ~Hittable()=default;
 };
