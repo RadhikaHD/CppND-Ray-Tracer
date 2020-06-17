@@ -6,8 +6,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
 #include "math.h"
 #include "sphere.h"
+
+Sphere first_sphere{SPHERE_RADIUS, SPHERE_CENTRE};
 
 float hitSphere(Ray &r) {
 
@@ -31,15 +34,13 @@ float hitSphere(Ray &r) {
 }
 
 rgb color(Ray &r) {
-    auto ray_t = hitSphere(r);
-  if (ray_t>0)
-  {
-    //calculate normal
-    position normal = glm::normalize(r.pointAtParameter(ray_t)-SPHERE_CENTRE);
-    return (0.5f*rgb(normal.x+1, normal.y+1, normal.z+1));
 
-    //get color from normal
-  }
+    auto hit_rec = std::make_shared <hit_record>(); 
+    //constructs a hit record with space allocated, returns a shared pointer to it 
+    auto hitornot = first_sphere.hit(r, TMIN, TMAX, hit_rec);
+    
+  if (hitornot)
+    return (0.5f*rgb(hit_rec->normal.x+1, hit_rec->normal.y+1, hit_rec->normal.z+1));
   else {
     position unit_vector = glm::normalize(r.direction());
     float t = 0.5 * (unit_vector.y + 1);
