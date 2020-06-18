@@ -93,8 +93,8 @@ void writeToPPM(std::string filename,
     for (int c = 0; c < NCOLS; c++) {
       rgb pixel_color{0, 0, 0};
       for (int n = 0; n < num_samples; n++) {
-        u = (1.0f / NCOLS) * (c + get_random());
-        v = (1.0f / NROWS) * (r + get_random());
+        u = (1.0f / (NCOLS-1)) * (c + get_random());
+        v = (1.0f / (NROWS-1)) * (r + get_random());
 
         Ray ray = cam.get_ray(u, v);
         pixel_color += color(ray, objects);
@@ -110,18 +110,14 @@ void writeToPPM(std::string filename,
 }
 
 int main() {
-  Camera main_cam{ORIGIN, SCREEN_BOTTOM_LEFT, SCREEN_WIDTH, SCREEN_HEIGHT};
+  Camera main_cam{90, float(NCOLS)/NROWS};
   std::vector<std::unique_ptr<Hittable>> objects;
+  auto R = cos(M_PI/4);
 
   objects.emplace_back(
-      std::make_unique<Sphere>(0.5f, position(0.0f, 0.0f, -1.0f)));
+      std::make_unique<Sphere>(R, position(-R, 0.0f, -1.0f)));
   objects.emplace_back(
-      std::make_unique<Sphere>(100, position(0.0f, -100.5f, -1.0f)));
-  objects.emplace_back(
-      std::make_unique<Sphere>(0.3f, position(1.1f, 0.0f, -1.0f)));
-  objects.emplace_back(
-      std::make_unique<Sphere>(0.3f, position(-1.1f, 0.0f, -1.0f)));
-
+      std::make_unique<Sphere>(R, position(R, 0.0f, -1.0f)));
   writeToPPM("output.ppm", objects, main_cam);
   return 0;
 }
