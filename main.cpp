@@ -1,3 +1,4 @@
+#include "camera.h"
 #include "constants.h"
 #include "math.h"
 #include "ray.h"
@@ -7,8 +8,16 @@
 #include <glm/glm.hpp>
 #include <iostream>
 #include <memory>
+#include <random>
 #include <string>
 #include <vector>
+
+// https://stackoverflow.com/a/36527160
+float get_random() {
+  static std::default_random_engine e;
+  static std::uniform_real_distribution<> dis(0, 1); // range 0 - 1
+  return dis(e);
+}
 
 bool hitObjects(std::vector<std::unique_ptr<Hittable>> const &hittable_objects,
                 Ray const &r, float const tmin, float const tmax,
@@ -70,22 +79,27 @@ rgb256 rgbToRgb256(rgb const &rgbval) {
 }
 
 void writeToPPM(std::string filename,
-                std::vector<std::unique_ptr<Hittable>> const &objects) {
+                std::vector<std::unique_ptr<Hittable>> const &objects,
+                Camera const &cam) {
   std::ofstream toppm;
   toppm.open(filename);
   toppm << "P3\n";
   toppm << NCOLS << " " << NROWS << "\n"; // columns and rows
   toppm << 255 << "\n";
-  float x, y;
+  float u, v;
+  int num_samples = 100;
 
-  for (int r = (NROWS-1); r >= 0; r--) {
+  for (int r = (NROWS - 1); r >= 0; r--) {
     for (int c = 0; c < NCOLS; c++) {
-      x = (SCREEN_WIDTH / NCOLS) * c;
-      y = (SCREEN_HEIGHT / NROWS) * r;
-      position rdirection((SCREEN_BOTTOM_LEFT.x + x),
-                          (SCREEN_BOTTOM_LEFT.y + y), SCREEN_Z_POS);
-      Ray ray(CAMERA, rdirection);
-      rgb pixel_color = color(ray, objects);
+      rgb pixel_color{0, 0, 0};
+      for (int n = 0; n < num_samples; n++) {
+        u = (1.0f / NCOLS) * (c + get_random());
+        v = (1.0f / NROWS) * (r + get_random());
+
+        Ray ray = cam.get_ray(u, v);
+        pixel_color += color(ray, objects);
+      }
+      pixel_color /= num_samples;
       rgb256 pixel_color_256 = rgbToRgb256(pixel_color);
       toppm << pixel_color_256.x << " " << pixel_color_256.y << " "
             << pixel_color_256.z << " ";
@@ -96,12 +110,18 @@ void writeToPPM(std::string filename,
 }
 
 int main() {
+  Camera main_cam{ORIGIN, SCREEN_BOTTOM_LEFT, SCREEN_WIDTH, SCREEN_HEIGHT};
   std::vector<std::unique_ptr<Hittable>> objects;
+
   objects.emplace_back(
       std::make_unique<Sphere>(0.5f, position(0.0f, 0.0f, -1.0f)));
   objects.emplace_back(
       std::make_unique<Sphere>(100, position(0.0f, -100.5f, -1.0f)));
+  objects.emplace_back(
+      std::make_unique<Sphere>(0.3f, position(1.1f, 0.0f, -1.0f)));
+  objects.emplace_back(
+      std::make_unique<Sphere>(0.3f, position(-1.1f, 0.0f, -1.0f)));
 
-  writeToPPM("output.ppm", objects);
+  writeToPPM("output.ppm", objects, main_cam);
   return 0;
 }
