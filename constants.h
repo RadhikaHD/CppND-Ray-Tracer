@@ -13,7 +13,5 @@ constexpr float SCREEN_HEIGHT = 2.0;
 constexpr int NCOLS = 200;
 constexpr int NROWS = 100;
 constexpr float SCREEN_Z_POS = -1.0f;
-constexpr position SPHERE_CENTRE(0.0f, 0.0f,-1.0f);
-constexpr float SPHERE_RADIUS = 0.5f;
 constexpr float TMIN = 0.0f;
 constexpr float TMAX = std::numeric_limits<float>::max();

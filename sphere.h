@@ -20,7 +20,7 @@ class Sphere: public Hittable
         return this->center;
     }
 
-    virtual bool hit(Ray const &r, float const tmin, float const tmax, std::shared_ptr<hit_record> rec);
+    virtual bool hit(Ray const &r, float const tmin, float const tmax, std::shared_ptr<hit_record> &rec);
 
     private:
     position center;
