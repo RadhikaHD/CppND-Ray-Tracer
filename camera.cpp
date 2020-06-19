@@ -5,21 +5,23 @@ Camera::Camera()
     : origin(0.0f, 0.0f, 0.0f), screen_bottom_left(0.0f, 0.0f, 0.0f),
       screen_width(0.0f, 0.0f, 0.0f), screen_height(0.0f, 0.0f, 0.0f) {}
 
-Camera::Camera(float vfov,
+Camera::Camera(position lookfrom, position lookat, position vup, float vfov,
                float aspect) {
 
-  auto theta = (M_PI*vfov)/180;
-  auto h = tan(theta / 2);
-  auto viewport_height = 2.0 * h;
-  auto viewport_width = aspect * viewport_height;
+  float theta = (M_PI * vfov) / 180.0f;
+  float h = tan(theta / 2.0f);
+  float viewport_height = 2.0f * h;
+  float viewport_width = aspect * viewport_height;
 
-  auto focal_length = 1.0;
+  position w = glm::normalize(lookfrom - lookat);
+  position u = glm::normalize(glm::cross(vup, w));
+  position v = glm::cross(w, u);
 
-  origin = position (0, 0, 0);
-  screen_width = position (viewport_width, 0.0, 0.0);
-  screen_height = position (0.0, viewport_height, 0.0);
+  origin = lookfrom;
+  screen_width = viewport_width * u;
+  screen_height = viewport_height * v;
   screen_bottom_left =
-      origin - (screen_width/2.0f)- (screen_height/2.0f) - position (0, 0, focal_length);
+      origin - (screen_width / 2.0f) - (screen_height / 2.0f) - w;
 }
 
 Ray Camera::get_ray(float u, float v) const {

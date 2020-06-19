@@ -7,8 +7,8 @@ class Camera {
 public:
   Camera();
 
-  Camera(float vfov,
-               float aspect);
+  Camera(position lookfrom, position lookat, position vup, float vfov,
+         float aspect);
 
   Ray get_ray(float u, float v) const;
 

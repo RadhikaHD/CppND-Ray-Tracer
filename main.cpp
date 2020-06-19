@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 
-// https://stackoverflow.com/a/36527160
+//get_random() function from here https://stackoverflow.com/a/36527160
 float get_random() {
   static std::default_random_engine e;
   static std::uniform_real_distribution<> dis(0, 1); // range 0 - 1
@@ -43,8 +43,7 @@ bool hitObjects(std::vector<std::unique_ptr<Hittable>> const &hittable_objects,
 rgb color(Ray &r, std::vector<std::unique_ptr<Hittable>> const &objects) {
 
   auto hit_rec = std::make_shared<hit_record>();
-  // constructs a hit record with space allocated, returns a shared pointer to
-  // it
+  // constructs a hit record with space allocated, returns a shared pointer to it
   auto hitornot = hitObjects(objects, r, TMIN, TMAX, hit_rec);
 
   if (hitornot)
@@ -57,17 +56,6 @@ rgb color(Ray &r, std::vector<std::unique_ptr<Hittable>> const &objects) {
     return gradient;
   }
 }
-/*
-glm::mat4 camera(float Translate, glm::vec2 const& Rotate)
-{
-        glm::mat4 Projection = glm::perspective(glm::pi<float>() * 0.25f, 4.0f
-/ 3.0f, 0.1f, 100.f); glm::mat4 View = glm::translate(glm::mat4(1.0f),
-glm::vec3(0.0f, 0.0f, -Translate)); View = glm::rotate(View, Rotate.y,
-glm::vec3(-1.0f, 0.0f, 0.0f)); View = glm::rotate(View, Rotate.x,
-glm::vec3(0.0f, 1.0f, 0.0f)); glm::mat4 Model = glm::scale(glm::mat4(1.0f),
-glm::vec3(0.5f)); return Projection * View * Model;
-}
-*/
 
 rgb256 rgbToRgb256(rgb const &rgbval) {
   int red, blue, green;
@@ -93,8 +81,8 @@ void writeToPPM(std::string filename,
     for (int c = 0; c < NCOLS; c++) {
       rgb pixel_color{0, 0, 0};
       for (int n = 0; n < num_samples; n++) {
-        u = (1.0f / (NCOLS-1)) * (c + get_random());
-        v = (1.0f / (NROWS-1)) * (r + get_random());
+        u = (1.0f / (NCOLS - 1)) * (c + get_random());
+        v = (1.0f / (NROWS - 1)) * (r + get_random());
 
         Ray ray = cam.get_ray(u, v);
         pixel_color += color(ray, objects);
@@ -110,14 +98,15 @@ void writeToPPM(std::string filename,
 }
 
 int main() {
-  Camera main_cam{90, float(NCOLS)/NROWS};
+  Camera main_cam(position(0, 0, 1), position(0, 0, -1), position(0, 1, 0), 90,
+                  ASPECT_RATIO);
   std::vector<std::unique_ptr<Hittable>> objects;
-  auto R = cos(M_PI/4);
 
   objects.emplace_back(
-      std::make_unique<Sphere>(R, position(-R, 0.0f, -1.0f)));
+      std::make_unique<Sphere>(0.5, position(-1, 0.0f, -1.0f)));
+  objects.emplace_back(std::make_unique<Sphere>(0.5, position(1, 0.0f, -1.0f)));
   objects.emplace_back(
-      std::make_unique<Sphere>(R, position(R, 0.0f, -1.0f)));
+      std::make_unique<Sphere>(100, position(0.0f, -100.5f, -1.0f)));
   writeToPPM("output.ppm", objects, main_cam);
   return 0;
 }
