@@ -56,20 +56,21 @@ rgb color(Ray &r, std::vector<std::unique_ptr<Hittable>> const &objects) {
   // it
   auto hitornot = hitObjects(objects, r, TMIN, TMAX, hit_rec);
 
+  rgb current_color;
+
   if (hitornot) {
     position target =
         hit_rec->point_where_hit + hit_rec->normal + randomInUnitCube();
-    // return (0.5f * rgb(hit_rec->normal.x + 1, hit_rec->normal.y + 1,
-    //                  hit_rec->normal.z + 1)); -- before diffuse was implemented
     Ray current_ray(hit_rec->point_where_hit,
                     (target - hit_rec->point_where_hit));
-    return (0.5f * color(current_ray, objects));
+    current_color = 0.5f * color(current_ray, objects);
   } else {
     position unit_vector = glm::normalize(r.direction());
     float t = 0.5 * (unit_vector.y + 1);
-    rgb gradient = (1 - t) * (WHITE) + t * (LIGHT_BLUE);
-    return gradient;
+    current_color = (1 - t) * (WHITE) + t * (LIGHT_BLUE);
   }
+
+  return (current_color);
 }
 
 rgb256 rgbToRgb256(rgb const &rgbval) {
@@ -113,15 +114,23 @@ void writeToPPM(std::string filename,
 }
 
 int main() {
-  Camera main_cam(position(0, 0, 1), position(0, 0, -1), position(0, 1, 0), 90,
+  Camera main_cam(position(-2, 2, 1), position(0, 0, -1), position(0, 1, 0), 90,
                   ASPECT_RATIO);
+
   std::vector<std::unique_ptr<Hittable>> objects;
 
   objects.emplace_back(
-      std::make_unique<Sphere>(0.5, position(-1, 0.0f, -1.0f)));
-  objects.emplace_back(std::make_unique<Sphere>(0.5, position(1, 0.0f, -1.0f)));
+      std::make_unique<Sphere>(500, position(0.0f, -500.5f, -1.0f)));
+
   objects.emplace_back(
-      std::make_unique<Sphere>(100, position(0.0f, -100.5f, -1.0f)));
+      std::make_unique<Sphere>(1.5, position(3.0f, 1.0f, -3.0f)));
+  objects.emplace_back(
+      std::make_unique<Sphere>(0.8, position(0.0f, 0.3f, -2.5f)));
+  objects.emplace_back(
+      std::make_unique<Sphere>(0.5, position(-1, 0.0f, -1.0f)));
+  objects.emplace_back(
+      std::make_unique<Sphere>(0.5, position(2.0f, 0.0f, 0.0f)));
+
   writeToPPM("output.ppm", objects, main_cam);
   return 0;
 }
