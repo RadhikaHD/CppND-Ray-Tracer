@@ -12,11 +12,20 @@
 #include <string>
 #include <vector>
 
-//get_random() function from here https://stackoverflow.com/a/36527160
+// get_random() function from here https://stackoverflow.com/a/36527160
 float get_random() {
   static std::default_random_engine e;
   static std::uniform_real_distribution<> dis(0, 1); // range 0 - 1
   return dis(e);
+}
+
+position randomInUnitCube() {
+  position p;
+  do {
+    p = 2.0f * (position(get_random(), get_random(), get_random())) -
+        position(1.0, 1.0, 1.0);
+  } while (std::pow(glm::length(p), 2) >= 1.0);
+  return p;
 }
 
 bool hitObjects(std::vector<std::unique_ptr<Hittable>> const &hittable_objects,
@@ -43,13 +52,19 @@ bool hitObjects(std::vector<std::unique_ptr<Hittable>> const &hittable_objects,
 rgb color(Ray &r, std::vector<std::unique_ptr<Hittable>> const &objects) {
 
   auto hit_rec = std::make_shared<hit_record>();
-  // constructs a hit record with space allocated, returns a shared pointer to it
+  // constructs a hit record with space allocated, returns a shared pointer to
+  // it
   auto hitornot = hitObjects(objects, r, TMIN, TMAX, hit_rec);
 
-  if (hitornot)
-    return (0.5f * rgb(hit_rec->normal.x + 1, hit_rec->normal.y + 1,
-                       hit_rec->normal.z + 1));
-  else {
+  if (hitornot) {
+    position target =
+        hit_rec->point_where_hit + hit_rec->normal + randomInUnitCube();
+    // return (0.5f * rgb(hit_rec->normal.x + 1, hit_rec->normal.y + 1,
+    //                  hit_rec->normal.z + 1)); -- before diffuse was implemented
+    Ray current_ray(hit_rec->point_where_hit,
+                    (target - hit_rec->point_where_hit));
+    return (0.5f * color(current_ray, objects));
+  } else {
     position unit_vector = glm::normalize(r.direction());
     float t = 0.5 * (unit_vector.y + 1);
     rgb gradient = (1 - t) * (WHITE) + t * (LIGHT_BLUE);
