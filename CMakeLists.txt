@@ -13,4 +13,4 @@ FetchContent_MakeAvailable(glm)
 
 include_directories(${glm_SOURCE_DIR})
 
-add_executable(RayTracer main.cpp sphere.cpp camera.cpp)
+add_executable(RayTracer main.cpp sphere.cpp camera.cpp lodepng.cpp)

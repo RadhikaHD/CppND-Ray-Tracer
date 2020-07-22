@@ -1,5 +1,6 @@
 #include "camera.h"
 #include "constants.h"
+#include "lodepng.h"
 #include "math.h"
 #include "ray.h"
 #include "sphere.h"
@@ -82,14 +83,11 @@ rgb256 rgbToRgb256(rgb const &rgbval) {
   return rgb256val;
 }
 
-void writeToPPM(std::string filename,
+void writeToPNG(std::string filename,
                 std::vector<std::unique_ptr<Hittable>> const &objects,
                 Camera const &cam) {
-  std::ofstream toppm;
-  toppm.open(filename);
-  toppm << "P3\n";
-  toppm << NCOLS << " " << NROWS << "\n"; // columns and rows
-  toppm << 255 << "\n";
+  std::vector<uint8_t> image;
+
   float u, v;
   int num_samples = 100;
 
@@ -105,12 +103,14 @@ void writeToPPM(std::string filename,
       }
       pixel_color /= num_samples;
       rgb256 pixel_color_256 = rgbToRgb256(pixel_color);
-      toppm << pixel_color_256.x << " " << pixel_color_256.y << " "
-            << pixel_color_256.z << " ";
+      image.push_back(pixel_color_256.x);
+      image.push_back(pixel_color_256.y);
+      image.push_back(pixel_color_256.z);
     }
-    toppm << "\n";
   }
-  toppm.close();
+
+  lodepng_encode_file(filename.c_str(), image.data(), NCOLS, NROWS,
+                      LodePNGColorType::LCT_RGB, 8);
 }
 
 int main() {
@@ -131,6 +131,6 @@ int main() {
   objects.emplace_back(
       std::make_unique<Sphere>(0.5, position(2.0f, 0.0f, 0.0f)));
 
-  writeToPPM("output.ppm", objects, main_cam);
+  writeToPNG("output.png", objects, main_cam);
   return 0;
 }
