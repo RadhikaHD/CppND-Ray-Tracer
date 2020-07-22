@@ -1,87 +1,93 @@
 # CppND Ray Tracer
 
-This Computer Graphics Ray Tracer, created using C++, is my submission for the final project of Udacity's C++ Nanodegree program. A ray tracer uses a rendering technique where it traces the path of light as pixels in an image frame to generate a final image. It also simulates the interaction of the ray of light with the other virtual objects in the scene. Ray tracing has been around for decades and is used to generate realistic visual images. However, it is computationally expensive and takes a long time to generate an image. Hence, it is more suitable for applications where still computer generated images are used versus applications that need real time rendering of their scenes. In this project, I have implemented Path Tracing which is a type of Ray tracing technique. In Ray Tracing, when a single ray of light hits an object, it can multiply and generate more rays of light. This increase in the number of rays is exponential and expensive to compute. But path tracing generates only a single ray of light which randomly bounces off when it hits an object in the scene. Ultimately, the path tracing algorithm, takes a random sampling of all the rays and generates the final image. I consider this a simple implementation of a Ray Tracer and hope to add more features in the future. In this submission, I have applied diffuse materials to the objects in the scene and implemented anti-aliasing to make them look smoother. I followed Peter Shirley's article "Ray Tracing in One Weekend" https://www.realtimerendering.com/raytracing/Ray%20Tracing%20in%20a%20Weekend.pdf for this project and it definitely took me longer than one weekend to implement this.
+This Computer Graphics Ray Tracer, created using C++, is my submission for the final project of Udacity's C++ Nanodegree program. 
+A ray tracer uses a rendering technique where it traces the path of light as pixels in an image frame to generate a final image. It also simulates the 
+interaction of the ray of light with the other virtual objects in the scene. Ray tracing has been around for decades and is used to generate realistic visual 
+images. However, it is computationally expensive and takes a long time to generate an image. Hence, it is more suitable for applications where still 
+computer generated images are used versus applications that need real time rendering of their scenes. 
 
-## Getting Started
+In this project, I have implemented Path Tracing which is a type of Ray tracing technique. In Ray Tracing, when a single ray of light hits an object, it can 
+multiply and generate more rays of light. This increase in the number of rays is exponential and expensive to compute. But path tracing generates only a 
+single ray of light which randomly bounces off when it hits an object in the scene. Ultimately, the path tracing algorithm, takes a random sampling of all 
+the rays and generates the final image. I consider this a simple implementation of a Ray Tracer and hope to add more features in the future. 
+In this submission, I have applied diffuse materials to the objects in the scene and implemented anti-aliasing to make them look smoother. 
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+I followed Peter Shirley's article Peter Shirley's article ["Ray Tracing in One Weekend"] (https://www.realtimerendering.com/raytracing/Ray%20Tracing%20in%20a%20Weekend.pdf) for 
+this project and it definitely took me longer than one weekend to implement this.
 
-### Prerequisites
+## Dependencies
 
-What things you need to install the software and how to install them
+This project depends on the following libraries:
 
-```
-Give examples
-```
+1. The [OpenGL Mathematics library](https://glm.g-truc.net/0.9.9/index.html) (GLM),
+a header only C++ library for graphics mathematics.
 
-### Installing
+2. The [lodepng](https://github.com/lvandeve/lodepng) library for writing to
+PNG format.
 
-A step by step series of examples that tell you how to get a development env running
+The dependencies **do not** have to be installed manually. lodepng is included
+in the source code for the project, and the build process below will automatically
+download and include GLM.
 
-Say what the step will be
+## Building
 
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+First, clone the project repository and change directory to it:
 
 ```
-Give an example
+git clone https://github.com/RadhikaHD/CppND-Ray-Tracer
+cd CppND-Ray-Tracer
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
+Next, build the project using CMake and Make:
 
 ```
-Give an example
+mkdir build
+cd build
+cmake ..
+make
 ```
 
-## Deployment
+## Running
 
-Add additional notes about how to deploy this on a live system
+After building the project, the `RayTracer` executable is found in the `build` folder.
+Running the program produces the output file `output.ppm`:
 
-## Built With
+```
+./RayTracer
+```
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+The `output.png` file can be viewed using an image viewer.
 
-## Contributing
+## Project Specification
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+### The project demonstrates an understanding of C++ functions and control structures.
+https://github.com/RadhikaHD/CppND-Ray-Tracer/blob/master/main.cpp#L31
 
-## Versioning
+### The project reads data from a file and process the data, or the program writes data to a file.
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+### The project uses Object Oriented Programming techniques.
 
-## Authors
+### Classes use appropriate access specifiers for class members.
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+### Class constructors utilize member initialization lists.
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+### Classes encapsulate behavior.
 
-## License
+### Classes follow an appropriate inheritance hierarchy.
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+### Derived class functions override virtual base class functions.
+
+### The project makes use of references in function declarations.
+
+### The project uses smart pointers instead of raw pointers.
+
+## License 
+
+This project is licensed under the [MIT License](LICENSE.md) Creative Commons License - see the [LICENSE.md](LICENSE.md) file for details
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Peter Shirley's article ["Ray Tracing in One Weekend"] (https://www.realtimerendering.com/raytracing/Ray%20Tracing%20in%20a%20Weekend.pdf)
+* OpenGL Mathematics library [GLM] (https://glm.g-truc.net/0.9.9/index.html)
+* PNG encoder and decoder in C and C++ [lodepng] (https://github.com/lvandeve/lodepng)
+* PurpleBooth README file [template] (https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
