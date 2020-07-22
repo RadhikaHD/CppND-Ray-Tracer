@@ -1,3 +1,5 @@
 a.out
-output.ppm
+*.ppm
 .DS_Store
+.vscode/
+build/
