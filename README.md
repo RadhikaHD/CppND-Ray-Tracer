@@ -13,7 +13,7 @@ the rays and generates the final image. I consider this a simple implementation 
 In this submission, I have applied diffuse materials to the objects in the scene and implemented anti-aliasing to make them look smoother. 
 
 I followed Peter Shirley's article Peter Shirley's 
-article ["Ray Tracing in One Weekend"] (https://www.realtimerendering.com/raytracing/Ray%20Tracing%20in%20a%20Weekend.pdf) 
+article ["Ray Tracing in One Weekend"](https://www.realtimerendering.com/raytracing/Ray%20Tracing%20in%20a%20Weekend.pdf) 
 for this project and it definitely took me longer than one weekend to implement this.
 
 ## Dependencies
@@ -138,7 +138,7 @@ This project is licensed under the [MIT License](LICENSE.md) Creative Commons Li
 
 ## Acknowledgments
 
-* Peter Shirley's article ["Ray Tracing in One Weekend"] (https://www.realtimerendering.com/raytracing/Ray%20Tracing%20in%20a%20Weekend.pdf)
-* OpenGL Mathematics library [GLM] (https://glm.g-truc.net/0.9.9/index.html)
-* PNG encoder and decoder in C and C++ [lodepng] (https://github.com/lvandeve/lodepng)
-* PurpleBooth README file [template] (https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
+* Peter Shirley's article ["Ray Tracing in One Weekend"](https://www.realtimerendering.com/raytracing/Ray%20Tracing%20in%20a%20Weekend.pdf)
+* OpenGL Mathematics library [GLM](https://glm.g-truc.net/0.9.9/index.html)
+* PNG encoder and decoder in C and C++ [lodepng](https://github.com/lvandeve/lodepng)
+* PurpleBooth README file [template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
