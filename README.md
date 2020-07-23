@@ -12,8 +12,9 @@ single ray of light which randomly bounces off when it hits an object in the sce
 the rays and generates the final image. I consider this a simple implementation of a Ray Tracer and hope to add more features in the future. 
 In this submission, I have applied diffuse materials to the objects in the scene and implemented anti-aliasing to make them look smoother. 
 
-I followed Peter Shirley's article Peter Shirley's article ["Ray Tracing in One Weekend"] (https://www.realtimerendering.com/raytracing/Ray%20Tracing%20in%20a%20Weekend.pdf) for 
-this project and it definitely took me longer than one weekend to implement this.
+I followed Peter Shirley's article Peter Shirley's 
+article ["Ray Tracing in One Weekend"] (https://www.realtimerendering.com/raytracing/Ray%20Tracing%20in%20a%20Weekend.pdf) 
+for this project and it definitely took me longer than one weekend to implement this.
 
 ## Dependencies
 
@@ -66,48 +67,69 @@ The `output.png` file can be viewed using an image viewer.
 
 ![Output image] (https://github.com/RadhikaHD/CppND-Ray-Tracer/blob/master/images/output.png)
 
-The scene has 5 spheres in total. The largest sphere serves as a surface on which the other 4 spheres are placed. A diffused or matte material is applied on all the spheres. These diffused objects take on the color of their surroundings and modulate it with their own color. As a result, you can see the parts of the spheres which are facing other spheres, have a darker color, sort of like a shadow. This is a result of the diffused material. The background in the scene has a light blue color that mimics the color of the sky on a clear day.
+The scene has 5 spheres in total. The largest sphere serves as a surface on which the other 4 spheres are placed. A diffused or matte material 
+is applied on all the spheres. These diffused objects take on the color of their surroundings and modulate it with their own color. As a result, you can 
+see the parts of the spheres which are facing other spheres, have a darker color, sort of like a shadow. This is a result of the diffused material. 
+The background in the scene has a light blue color that mimics the color of the sky on a clear day.
 The final rendered image in .png format can be found in the build folder. Please note that the rendering takes a few minutes to complete once the program is run.
 
 ## Project Specification
 
-Listed below are all the rubric points or criteria that this project satisfies. Also, included is one example for each criteria, even though there might be more instances of the criteria throughout the project.
+Listed below are all the rubric points or criteria that this project satisfies. Also, included is one example for each criteria, even though 
+there might be more instances of the criteria throughout the project.
 
 ### The project demonstrates an understanding of C++ functions and control structures.
+
 https://github.com/RadhikaHD/CppND-Ray-Tracer/blob/45ece7b4c16b1c3a6dca3f93d727a4233ab1868e/main.cpp#L40
 
 ### The project reads data from a file and process the data, or the program writes data to a file.
+
 https://github.com/RadhikaHD/CppND-Ray-Tracer/blob/45ece7b4c16b1c3a6dca3f93d727a4233ab1868e/main.cpp#L112
+
 Program writes to a png file to generate the final output image.
 
 ### The project uses Object Oriented Programming techniques.
+
 https://github.com/RadhikaHD/CppND-Ray-Tracer/blob/45ece7b4c16b1c3a6dca3f93d727a4233ab1868e/camera.cpp#L4
+
 There are other classes in the project that fulfill this criteria. This is just one example.
 
 ### Classes use appropriate access specifiers for class members.
+
 https://github.com/RadhikaHD/CppND-Ray-Tracer/blob/45ece7b4c16b1c3a6dca3f93d727a4233ab1868e/sphere.h#L18
+
 This class has both public and private members.
 
 ### Class constructors utilize member initialization lists.
+
 https://github.com/RadhikaHD/CppND-Ray-Tracer/blob/45ece7b4c16b1c3a6dca3f93d727a4233ab1868e/sphere.h#L9
 
 ### Classes encapsulate behavior.
+
 https://github.com/RadhikaHD/CppND-Ray-Tracer/blob/45ece7b4c16b1c3a6dca3f93d727a4233ab1868e/sphere.h#L11
+
 Member variables can be accessed through getter functions in this class.
 
 ### Classes follow an appropriate inheritance hierarchy.
+
 https://github.com/RadhikaHD/CppND-Ray-Tracer/blob/45ece7b4c16b1c3a6dca3f93d727a4233ab1868e/sphere.h#L5
+
 A Sphere is a Hittable object and this relation has been implemented through inheritance.
 
 ### Derived class functions override virtual base class functions.
+
 https://github.com/RadhikaHD/CppND-Ray-Tracer/blob/45ece7b4c16b1c3a6dca3f93d727a4233ab1868e/hittable.h#L15
 
 ### The project makes use of references in function declarations.
+
 https://github.com/RadhikaHD/CppND-Ray-Tracer/blob/45ece7b4c16b1c3a6dca3f93d727a4233ab1868e/main.cpp#L32
+
 A vector of hittable objects is being passed by reference.
 
 ### The project uses smart pointers instead of raw pointers.
+
 https://github.com/RadhikaHD/CppND-Ray-Tracer/blob/45ece7b4c16b1c3a6dca3f93d727a4233ab1868e/main.cpp#L32
+
 A vector of unique pointers to Hittable objects is passed by reference.
 
 ## License 
