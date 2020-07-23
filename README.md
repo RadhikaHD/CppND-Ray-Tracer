@@ -61,7 +61,58 @@ The `output.png` file can be viewed using an image viewer.
 
 ## Project Description
 
+This image below shows how a ray tracer works,
+
+![Ray Trace Diagram](https://upload.wikimedia.org/wikipedia/commons/8/83/Ray_trace_diagram.svg)
+
+The ray tracer traces a path from an imaginary eye or a camera through each pixel in a virtual screen and calculates the color of the object visible through it. A ray is 
+sent outward from the camera and towards the objects in the scene. It then bounces off of them and the pixel values are calculated to generate the final image.
+
+The following class structure is used to implement the setup mentioned above,
+
 ### File and Class Structure
+
+1) Camera class
+
+Header file - Camera.h
+
+Source file - Camera.cpp
+
+Description - A simple positionable camera that looks at the scene. All the member variables of this class are private. 
+
+2) Hittable class
+
+Header file - Hittable.h
+
+Description -
+
+3) Sphere class
+
+Header file - Sphere.h
+
+Source file - Sphere.cpp
+
+Description -
+
+4) Lodepng class
+
+Header file - lodepng.h
+
+Source file - lodepng.cpp
+
+Description -
+
+5) Ray class
+
+Header file - ray.h
+
+Description -
+
+Other files -
+
+1) types.h - In this project, a 3D vector is used to define a position type as well as color type. This file is used to declare the various types a 
+3D vector represents in this project.
+2) constants.h - Defines all the constant values used across the project.
 
 ### Expected Output
 
