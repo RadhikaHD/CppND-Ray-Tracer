@@ -72,47 +72,33 @@ The following class structure is used to implement the setup mentioned above,
 
 ### File and Class Structure
 
-1) Camera class
+1) Camera class (`camera.h & camera.cpp`)
+   
+   Description - A simple positionable camera that looks at the scene.
 
-Header file - Camera.h
+2) Ray class (`ray.h`)
+   
+   Description - A class that represents a ray with an origin and a direction.
 
-Source file - Camera.cpp
+3) Hittable class (`Hittable.h`)
+   
+   Description - An abstract class to represent anything that can be hit by a ray.
 
-Description - A simple positionable camera that looks at the scene. All the member variables of this class are private. 
-
-2) Hittable class
-
-Header file - Hittable.h
-
-Description -
-
-3) Sphere class
-
-Header file - Sphere.h
-
-Source file - Sphere.cpp
-
-Description -
-
-4) Lodepng class
-
-Header file - lodepng.h
-
-Source file - lodepng.cpp
-
-Description -
-
-5) Ray class
-
-Header file - ray.h
-
-Description -
+4) Sphere class (`Sphere.h & Sphere.cpp`)
+   
+   Description - A class that represents a sphere object in the scene. It inherits from the abstract Hittable class. Hence, a Sphere object is Hittable.
+   
 
 Other files -
 
-1) types.h - In this project, a 3D vector is used to define a position type as well as color type. This file is used to declare the various types a 
+1) main.cpp - The entire scene is set up in this file. The color of each point in the scene is also calculated in this file and finally, the results are written 
+to the output png file. 
+2) types.h - In this project, a 3D vector is used to define a position type as well as color type. This file is used to declare the various types a 
 3D vector represents in this project.
-2) constants.h - Defines all the constant values used across the project.
+3) constants.h - Defines all the constant values used across the project.
+4) lodepng.h & lodepng.cpp - Taken from the [lodepng](https://github.com/lvandeve/lodepng) library specifically for the lodepng_encode_file function to write the result of the
+program to a png file. Please refer to this line of code where the function is being used -
+https://github.com/RadhikaHD/CppND-Ray-Tracer/blob/bdbb5f47ffd960b109d9029d3fdb19d42adc20de/main.cpp#L112 
 
 ### Expected Output
 
