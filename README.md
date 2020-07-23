@@ -65,7 +65,7 @@ The `output.png` file can be viewed using an image viewer.
 
 ### Expected Output
 
-![Output image] (https://github.com/RadhikaHD/CppND-Ray-Tracer/blob/master/images/output.png)
+![Output image](https://github.com/RadhikaHD/CppND-Ray-Tracer/blob/master/images/output.png)
 
 The scene has 5 spheres in total. The largest sphere serves as a surface on which the other 4 spheres are placed. A diffused or matte material 
 is applied on all the spheres. These diffused objects take on the color of their surroundings and modulate it with their own color. As a result, you can 
